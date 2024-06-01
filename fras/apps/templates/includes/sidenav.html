@@ -1,0 +1,69 @@
+<aside class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+  <div class="scrollbar-inner">
+    <div class="navbar-inner">
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <!-- Nav items -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:user_home" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Register</span>
+            </a>
+          <!-- </li>
+           <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:report" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Reporting</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:user_register" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Attendance</span>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:IN_Temp" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Cam-IN FEED</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:Out_Temp" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Cam-OUT FEED</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:attendance_report" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Attendance Report</span>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:daily_attendance_page" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Daily Attendance Report</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:unknow_view" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Anonymous Detections</span>
+            </a>
+          </li>
+
+          <!-- <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url "user:show_rejected" %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Rejected Detections</span>
+            </a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,327 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+   <html>
+      <head>
+         <meta charset = "utf-8">
+         <title>...</title>
+         <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+         *{
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+           font-family: 'Poppins',sans-serif;
+         }
+         .container{
+           max-width: 700px;
+           width: 100%;
+           background-color: #fff;
+           padding: 25px 30px;
+           border-radius: 5px;
+           box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+         }
+         .container .title{
+           font-size: 25px;
+           font-weight: 500;
+           position: relative;
+         }
+         .container .title::before{
+           content: "";
+           position: absolute;
+           left: 0;
+           bottom: 0;
+           height: 3px;
+           width: 30px;
+           border-radius: 5px;
+           background: linear-gradient(135deg, #71b7e6, #9b59b6);
+         }
+         .content form .user-details{
+           display: flex;
+           flex-wrap: wrap;
+           justify-content: space-between;
+           margin: 20px 0 12px 0;
+         }
+         form .user-details .input-box{
+           margin-bottom: 15px;
+           width: calc(100% / 2 - 20px);
+         }
+         form .input-box span.details{
+           display: block;
+           font-weight: 500;
+           margin-bottom: 5px;
+         }
+         .user-details .input-box input{
+           height: 45px;
+           width: 100%;
+           outline: none;
+           font-size: 16px;
+           border-radius: 5px;
+           padding-left: 15px;
+           border: 1px solid #ccc;
+           border-bottom-width: 2px;
+           transition: all 0.3s ease;
+         }
+         .user-details .input-box input:focus,
+         .user-details .input-box input:valid{
+           border-color: #9b59b6;
+         }
+          form .gender-details .gender-title{
+           font-size: 20px;
+           font-weight: 500;
+          }
+          form .category{
+            display: flex;
+            width: 80%;
+            margin: 14px 0 ;
+            justify-content: space-between;
+          }
+          form .category label{
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+          }
+          form .category label .dot{
+           height: 18px;
+           width: 18px;
+           border-radius: 50%;
+           margin-right: 10px;
+           background: #d9d9d9;
+           border: 5px solid transparent;
+           transition: all 0.3s ease;
+         }
+          #dot-1:checked ~ .category label .one,
+          #dot-2:checked ~ .category label .two,
+          #dot-3:checked ~ .category label .three{
+            background: #9b59b6;
+            border-color: #d9d9d9;
+          }
+          form input[type="radio"]{
+            display: none;
+          }
+          form .button{
+            height: 45px;
+            margin: 35px 0
+          }
+          form .button input{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+          }
+          form .button input:hover{
+           /* transform: scale(0.99); */
+           background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+           }
+          @media(max-width: 584px){
+          .container{
+           max-width: 100%;
+         }
+         form .user-details .input-box{
+             margin-bottom: 15px;
+             width: 100%;
+           }
+           form .category{
+             width: 100%;
+           }
+           .content form .user-details{
+             max-height: 300px;
+             overflow-y: scroll;
+           }
+           .user-details::-webkit-scrollbar{
+             width: 5px;
+           }
+           }
+           @media(max-width: 459px){
+           .container .content .category{
+             flex-direction: column;
+           }
+         }
+         .button1 {
+            background-color: #4CAF50; 
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+          }
+          #images-container {
+            display: none;
+          }
+       </style>
+      </head>
+
+      <body>
+         <div class="container" style="margin-top: 30px;">
+            <div class="title">User Registration</div>
+               <div class="content">
+                  <form method="POST" action="{% url 'user:train_data' %}">
+                     {% csrf_token %}
+                     <div class="user-details" style="width: 550px;height: 502px;margin-left: 42px;">
+
+                        <div class="input-box" style="
+                        margin-bottom: 0px;
+                        width: 252px;
+                        height: 108px;">
+                        <span class="details">Full Name</span>
+                        <input id="intname" type="text" name="intname" placeholder="Enter your name" required>
+                        </div> 
+
+
+                        <div class="input-box">
+                        <span class="details">Employee ID</span>
+                        <input type="text" id="myInput" name="myInput">
+                        <script>
+                          function getData() {
+                              var inputid = document.getElementById("myInput").value;
+                              var inputname = document.getElementById("intname").value;
+                              var inputdepartment = document.getElementById("inputdept").value;
+                              var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+                      
+                              if (inputid && inputname && inputdepartment) {
+                                  var data = {
+                                      inputid: inputid,
+                                      inputname: inputname,
+                                      inputdepartment: inputdepartment
+                                  };
+                                  console.log(data,"?????????")
+                                  $.ajax({
+                                      type: "POST",
+                                      url: "{% url 'user:get_id' %}",
+                                      headers: {
+                                          "X-CSRFToken": csrftoken,
+                                          "Content-Type": "application/json"
+                                      },
+                                      data: JSON.stringify(data),
+                                      success: function(response) {
+                                          console.log(response);
+                                          console.log("Data sent successfully");
+                                        var imageContainer = document.getElementById("image-container");
+                                        $('#image-container').html('<img src="{% url "user:camera_feed" %}" style="width: 400px;height: 300px;margin-left: 71px;">');
+                                        const img = document.getElementById('cameraFeed');
+                                          // handle response from server
+                                      },
+                                      error: function(xhr, status, error) {
+                                          console.log(xhr.responseText);
+                                          // handle error
+                                      }
+                                  });
+                              } else {
+                                  alert("Please fill in all fields.");
+                              }
+                          }
+                      </script>
+{% comment %}                       
+                           <script>
+                              function getData() {
+                                 var inputid = document.getElementById("myInput").value;
+                                 var inputname = document.getElementById("intname").value;
+                                 var inputdepartment = document.getElementById("inputdept").value;
+                                 var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+                                 if (inputid && inputname && inputdepartment) {
+                                    console.log(inputid);
+                                    console.log(inputname);
+                                    console.log(inputdepartment);
+                                    $.ajax({
+                                      type: "POST",
+                                      contentType: "application/json",
+                                      url:  "{% url 'user:get_id' %}",
+                                      headers: {"X-CSRFToken": csrftoken},
+                                      data: {"inputValue": inputid, "intname":inputname,"inputdept":inputdepartment},
+                                      success: function(data) {
+                                        console.log("Data sent successfully");
+                                        var imageContainer = document.getElementById("image-container");
+                                        $('#image-container').html('<img src="{% url "user:camera_feed" %}" style="width: 400px;height: 300px;margin-left: 71px;">');
+                                        const img = document.getElementById('cameraFeed');
+                                        
+                                      }
+                                    });
+
+                                  } else {
+                                    alert("Please fill the all fields")
+                                  }
+
+                              }
+                           </script> {% endcomment %}
+                          
+                            
+
+                        </div>
+                        
+
+                        <div class="input-box">
+                           <span class="details">Department</span>
+                           <input list="browsers" name="inputdept" id="inputdept">
+                              <datalist id="browsers">
+                                <option value="" disabled selected>Select Department:</option>
+                                <option value="mooglelabs">Mooglelabs</option>
+                                <option value="seasia">Seasia</option>
+                                <option value="woosper">Woosper</option>
+                                <option value="bugraptor">Bugraptor</option>
+                                <option value="cerebrum">Cerebrum</option>
+                                <option value="uiux">Uiux</option>
+                                <option value="cerebrun_digital">Cerebrun Digital</option>
+                              </datalist>
+                        </div>
+                        
+                        <button type="button" class="button1" onclick="getData()" style="margin-top: 9px; width: 179px; height: 55px;">Capture</button>
+
+                        <div class="input-box" style="width: 549px; height: 291px; margin-left: 19px;">
+                           <span class="details">Image</span>
+                           <div id="image-container">
+                            <img src="{% static 'images/facepositions.gif' %}" alt="My Image" style="
+                            width: 269px;
+                            margin-left: 108px;
+                        " > 
+                           </div>
+                           
+                        </div>
+                        <div id="context-container"></div>
+                        
+                     </div>
+
+                        <div class="button">
+                           <input type="submit" value="Register">
+                        </div>
+                  </form>
+               </div>
+            </div>
+         
+      </body>
+</html>
+      {% include "includes/footer.html" %}
+         </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+{% endblock javascripts %}
+
+s
+ 
+ 
+ 

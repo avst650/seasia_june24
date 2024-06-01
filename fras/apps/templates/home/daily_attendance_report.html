@@ -1,0 +1,782 @@
+                                                               
+                                                                 
+{% extends 'layouts/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>...</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 25px 30px;
+      border-radius: 5px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+      margin-left: 251px;
+    }
+
+    .container .title {
+      font-size: 25px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .container .title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 30px;
+      border-radius: 5px;
+      background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    }
+
+    .content form .user-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 20px 0 12px 0;
+    }
+
+    form .user-details .input-box {
+      margin-bottom: 15px;
+      width: calc(100% / 2 - 20px);
+    }
+
+    form .input-box span.details {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .user-details .input-box input {
+      height: 45px;
+      width: 100%;
+      outline: none;
+      font-size: 16px;
+      border-radius: 5px;
+      padding-left: 15px;
+      border: 1px solid #ccc;
+      border-bottom-width: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .user-details .input-box input:focus,
+    .user-details .input-box input:valid {
+      border-color: #9b59b6;
+    }
+
+    form .gender-details .gender-title {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    form .category {
+      display: flex;
+      width: 80%;
+      margin: 14px 0;
+      justify-content: space-between;
+    }
+
+    form .category label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    form .category label .dot {
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      margin-right: 10px;
+      background: #d9d9d9;
+      border: 5px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    #dot-1:checked~.category label .one,
+    #dot-2:checked~.category label .two,
+    #dot-3:checked~.category label .three {
+      background: #9b59b6;
+      border-color: #d9d9d9;
+    }
+
+    form input[type="radio"] {
+      display: none;
+    }
+
+    form .button {
+      height: 45px;
+      margin: 35px 0
+    }
+
+    form .button input {
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    }
+
+    form .button input:hover {
+      /* transform: scale(0.99); */
+      background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+    }
+
+    @media(max-width: 584px) {
+      .container {
+        max-width: 100%;
+      }
+
+      form .user-details .input-box {
+        margin-bottom: 15px;
+        width: 100%;
+      }
+
+      form .category {
+        width: 100%;
+      }
+
+      .content form .user-details {
+        max-height: 300px;
+        overflow-y: scroll;
+      }
+
+      .user-details::-webkit-scrollbar {
+        width: 5px;
+      }
+    }
+
+    @media(max-width: 459px) {
+      .container .content .category {
+        flex-direction: column;
+      }
+    }
+
+    .button1 {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+
+    #images-container {
+      display: none;
+    }
+
+    .chart-container {
+      flex: 1;
+      max-width: 500px;
+      margin-right: 20px;
+    }
+
+    .text-container {
+      flex: 1;
+      width: 100%;
+    }
+
+    .card {
+      padding: 20px;
+      background-color: #F2F2F2;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .row-container {
+      display: flex;
+    }
+
+    .chart-container,
+    .text-container {
+      flex: 1;
+      margin-right: 20px;
+    }
+
+    canvas {
+      max-width: 100%;
+      max-height: 500px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .text-present {
+      color: #36A2EB;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .text-absent {
+      color: #FF6384;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .table-container {
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #F2F2F2;
+    }
+
+    .text-bold {
+      font-weight: bold;
+    }
+
+
+    .title {
+      margin-right: 10px;
+    }
+
+
+    /* CSS for the table */
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="container" style="margin-top: 30px;">
+    <div class="container"
+      style="margin-top: 30px; margin-left: 0px; width: 1000px; display: flex; justify-content: space-between; align-items: center;">
+
+      <div class="title">Attendance Report</div>
+      <div class="options">
+        <label for="department">Select Department:</label>
+        <select id="department" name="department" onchange="fetchEmployees()">
+          <option value="" disabled selected>Select Department:</option>
+          <option value="mooglelabs">Mooglelabs</option>
+          <option value="seasia">Seasia</option>
+          <option value="woosper">Woosper</option>
+          <option value="bugraptor">Bugraptor</option>
+          <option value="cerebrum">Cerebrum</option>
+          <option value="uiux">Uiux</option>
+          <option value="cerebrun_digital">Cerebrun Digital</option>
+        </select>
+      </div>
+
+      <div class="options">
+        <label for="source">Select Source:</label>
+        <select id="source" name="source" disabled onchange="fetchAttendance()">
+          <option value="">Select Source:</option>
+        </select>
+      </div>
+
+      <div class="options">
+        <button id="reloadButton" type="button">Clear</button>
+      </div>
+
+    </div>
+    <div class="container"
+      style="margin-top: 30px; margin-left: 0px; width: 1000px; display: flex; justify-content: space-between; align-items: center;">
+
+      <div class="row-container">
+        <div class="options">
+          <label for="search"></label>
+          <input type="text" id="search" oninput="searchTable()" placeholder="Search by ID or Name"
+            style="width: 250px;">
+        </div>
+      </div>
+
+
+    </div>
+    <div class="container" style="margin-top: 30px; margin-left: 0px;">
+
+      <div class="row-container">
+
+        <div class="chart-container">
+          <canvas id="chart"></canvas>
+        </div>
+
+
+        <div class="text-container">
+          <h1>Report</h1>
+          <a href="/attendance_report">
+            <h1>&#128198; Calendar</h1>
+          </a>
+
+
+          <div class="card">
+            <button id="presentButton" onclick="showPresent()">Person Present</button>
+            <div class="value text-present"> {{ present }}</div>
+          </div>
+          <div class="card">
+            <button id="absentButton" onclick="showAbsent()">Person Absent</button>
+            <div class="value text-absent">{{ absent }}</div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="table-container">
+        <table id="employeeTable">
+          <thead>
+            <tr>
+              <th>Emp ID</th>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Date</th>
+              <th>In time (First Login)</th>
+              <th>Exit Time (Last Logout)</th>
+              <th>Total Hours</th>
+
+              <th>Status</th>
+              <th>Detailed Report</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for employee in data %}
+            <tr>
+              <td>{{ employee.id }}</td>
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.department }}</td>
+              <td>{{ employee.date }}</td>
+              <td>{{ employee.first_in }}</td>
+              <td>{{ employee.last_out }}</td>
+              <td>{{ employee.total}}</td>
+              <td>{{ employee.status }}</td>
+
+              <td><a href="{% url 'user:User_report' id=employee.id %}"><button
+                    class="button button1">Click</button></a></td>
+              {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <script>
+        function searchTable() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("search");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("employeeTable");
+          tr = table.getElementsByTagName("tr");
+
+          for (i = 0; i < tr.length; i++) {
+            var found = false; // Flag to check if either ID or Name matches
+            for (var j = 0; j < 2; j++) { // Loop through both columns (ID and Name)
+              td = tr[i].getElementsByTagName("td")[j];
+              if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  found = true;
+                  break; // If match is found in either column, break the inner loop
+                }
+              }
+            }
+
+            if (found) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+
+
+
+
+
+        function showPresent() {
+          filterTable('Present');
+        }
+
+        // Function to show only details of absent persons
+        function showAbsent() {
+          filterTable('Absent');
+        }
+
+        // Function to filter the table based on the status (Present or Absent)
+        function filterTable(status) {
+          // Get the table body element
+          const tableBody = document.querySelector('#employeeTable tbody');
+
+          // Get all rows in the table
+          const rows = tableBody.querySelectorAll('tr');
+
+          // Loop through each row and hide/show based on the status
+          rows.forEach(row => {
+            const statusCell = row.querySelector('td:nth-child(8)'); // Assuming Status is in the 8th column
+            if (statusCell.textContent === status) {
+              row.style.display = 'table-row'; // Show the row if the status matches
+            } else {
+              row.style.display = 'none'; // Hide the row if the status doesn't match
+            }
+          });
+        }
+        let personPresent = {{ present }};
+        let personAbsent = {{ absent }};
+        const ctx = document.getElementById('chart').getContext('2d');
+        const chart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Present', 'Absent'],
+            datasets: [{
+              data: [personPresent, personAbsent],
+              backgroundColor: ['#36A2EB', '#FF6384'],
+            }],
+          },
+        });
+
+        updateChartData(personPresent, personAbsent);
+
+        function updateChartData(presentValue, absentValue) {
+          personPresent = presentValue;
+          personAbsent = absentValue;
+
+          // Update person present and absent values in the HTML
+          document.querySelector('.value.text-present').innerHTML = personPresent;
+          document.querySelector('.value.text-absent').innerHTML = personAbsent;
+
+          // Update chart data and redraw the chart
+          chart.data.datasets[0].data = [personPresent, personAbsent];
+          chart.update();
+        }
+
+        function fetchEmployees() {
+          var department = document.getElementById('department').value;
+          var source = document.getElementById('source');
+
+          var url = "/api/fetch_daily_employees?department=" + encodeURIComponent(department);
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              var employees = JSON.parse(xhr.responseText);
+              console.log(employees, "sending the data to the backend");
+
+              source.innerHTML = "";
+              source.disabled = false;
+              var employeeOption = document.createElement("option");
+              employeeOption.value = "";
+              employeeOption.textContent = "Select Source";
+              source.appendChild(employeeOption);
+              if (employees.length > 0) {
+                list = [];
+                for (var i = 0; i < employees.length; i++) {
+                  var employeeOption = document.createElement("option");
+                  employeeOption.value = employees[i].id;
+                  employeeOption.textContent = employees[i].name;
+                  source.appendChild(employeeOption);
+
+                  list.push(employees[i].id); // Add employee ID to the list array
+                }
+              } else {
+                list = [];
+              }
+
+              fetchEmployeeDetails(list);
+            } else {
+              // Handle errors or show a loading state
+            }
+          };
+          xhr.send();
+        }
+
+        function fetchEmployeeDetails(list) {
+          var url = "/api/check_daily_employee_presence";
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", url, true);
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken")); // Include CSRF token in the request headers
+
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              var employeeDetails = JSON.parse(xhr.responseText);
+              console.log("response data =", employeeDetails);
+
+              // Extract present and absent values from the employeeDetails object
+              const { present, absent, employeedata } = employeeDetails;
+
+              // Update person present and absent values in the HTML
+              document.querySelector('.value.text-present').innerHTML = present;
+              document.querySelector('.value.text-absent').innerHTML = absent;
+
+              // Update chart data and redraw the chart
+              chart.data.datasets[0].data = [present, absent];
+              chart.update();
+
+              // Get the table body element
+              const tableBody = document.querySelector('#employeeTable tbody');
+
+              // Clear the existing rows from the table body
+              tableBody.innerHTML = "";
+
+              // Loop through the employeedata and append rows to the table body
+              for (let i = 0; i < employeedata.length; i++) {
+                const employee = employeedata[i];
+                console.log(employee, "?????????????????????????????????")
+
+                // Create a new row
+                const newRow = document.createElement('tr');
+
+                // Create table cells and set the values
+                const empIdCell = document.createElement('td');
+                empIdCell.textContent = employee.Emp_ID;
+                newRow.appendChild(empIdCell);
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = employee.Name;
+                newRow.appendChild(nameCell)
+
+                const departmentCell = document.createElement('td');
+                departmentCell.textContent = employee.Department;
+                newRow.appendChild(departmentCell);
+
+                const dateCell = document.createElement('td');
+                dateCell.textContent = employee.Date;
+                newRow.appendChild(dateCell)
+
+                const IntimeCell = document.createElement('td');
+                IntimeCell.textContent = employee.In_time;
+                newRow.appendChild(IntimeCell);
+
+                const Exit_Time = document.createElement('td');
+                Exit_Time.textContent = employee.Exit_Time;
+                newRow.appendChild(Exit_Time);
+
+                const Total_Hours = document.createElement('td');
+                Total_Hours.textContent = employee.Total_Hours;
+                newRow.appendChild(Total_Hours);
+
+                const Status = document.createElement('td');
+                Status.textContent = employee.Status;
+                newRow.appendChild(Status);
+                const detailedReportCell = document.createElement('td');
+
+                // Create the button element
+                const detailedReportButton = document.createElement('button');
+                detailedReportButton.textContent = 'Click';
+
+                // Set the button class
+                detailedReportButton.className = 'button button1';
+                ` `
+                // Set the button click event to navigate to the detailed report URL
+                detailedReportButton.addEventListener('click', function () {
+                  window.location.href = '/User_report/' + employee.Emp_ID + '/';
+
+                });
+
+                // Append the button to the cell
+                detailedReportCell.appendChild(detailedReportButton);
+
+                // Append the new cells to the row
+                newRow.appendChild(detailedReportCell);
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
+              }
+            } else {
+              // Handle errors or show a loading state
+            }
+          };
+
+          var payload = JSON.stringify({ employeeIds: list });
+          xhr.send(payload);
+        }
+
+
+        function fetchAttendance() {
+  var employeeId = document.getElementById("source").value;
+  var url = "/api/daily_employee_attendance?employeeId=" + encodeURIComponent(employeeId);
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      var employeeDetails = JSON.parse(xhr.responseText);
+
+      // Extract present and absent values from the employeeDetails object
+      const { present, absent, employeedata } = employeeDetails;
+
+      // Update person present and absent values in the HTML
+      document.querySelector('.value.text-present').innerHTML = present;
+      document.querySelector('.value.text-absent').innerHTML = absent;
+
+      // Update chart data and redraw the chart
+      chart.data.datasets[0].data = [present, absent];
+      chart.update();
+
+      // Get the table body element
+      const tableBody = document.querySelector('#employeeTable tbody');
+
+      // Clear the existing rows from the table body
+      tableBody.innerHTML = "";
+
+      // Loop through the employeedata and append rows to the table body
+      for (let i = 0; i < employeedata.length; i++) {
+        const employee = employeedata[i];
+
+        // Create a new row
+        const newRow = document.createElement('tr');
+
+        // Create table cells and set the values
+        const empIdCell = document.createElement('td');
+        empIdCell.textContent = employee.Emp_ID;
+        newRow.appendChild(empIdCell);
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = employee.Name;
+        newRow.appendChild(nameCell);
+
+        const departmentCell = document.createElement('td');
+        departmentCell.textContent = employee.Department;
+        newRow.appendChild(departmentCell);
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = employee.Date;
+        newRow.appendChild(dateCell);
+
+        const IntimeCell = document.createElement('td');
+        IntimeCell.textContent = convertToIST(employee.In_time);
+        newRow.appendChild(IntimeCell);
+
+        const Exit_Time = document.createElement('td');
+        Exit_Time.textContent = convertToIST(employee.Exit_Time);
+        newRow.appendChild(Exit_Time);
+
+        const Total_Hours = document.createElement('td');
+        Total_Hours.textContent = employee.Total_Hours;
+        newRow.appendChild(Total_Hours);
+
+        const Status = document.createElement('td');
+        Status.textContent = employee.Status;
+        newRow.appendChild(Status);
+
+        // Create the button element
+        const detailedReportButton = document.createElement('button');
+        detailedReportButton.textContent = 'Click';
+        detailedReportButton.className = 'button button1';
+
+        // Set the button click event to navigate to the detailed report URL
+        detailedReportButton.addEventListener('click', function () {
+          window.location.href = '/User_report/' + employee.Emp_ID + '/';
+        });
+
+        // Create the cell for the detailed report button
+        const detailedReportCell = document.createElement('td');
+        detailedReportCell.appendChild(detailedReportButton);
+
+        // Append the new cells to the row
+        newRow.appendChild(detailedReportCell);
+
+        // Append the new row to the table body
+        tableBody.appendChild(newRow);
+      }
+    } else {
+      // Handle errors or show a loading state
+    }
+  };
+  xhr.send();
+}
+
+// Function to convert UTC time to IST or display '--' for invalid dates
+function convertToIST(utcTime) {
+  if (isNaN(new Date(utcTime))) {
+    return '--'; // Return '--' for invalid date
+  }
+
+  const options = {
+    timeZone: 'Asia/Kolkata',
+    hour12: true,
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  };
+
+  return new Date(utcTime).toLocaleTimeString('en-US', options);
+}
+
+
+
+        document.getElementById("reloadButton").addEventListener("click", function () {
+          // Reload the page
+          location.reload();
+        });
+
+        function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== "") {
+            var cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+
+
+      </script>
+    </div>
+  </div>
+</body>
+
+</html>
+{% include "includes/footer.html" %}
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+<script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+{% endblock javascripts %}                                                                 
+                                                              

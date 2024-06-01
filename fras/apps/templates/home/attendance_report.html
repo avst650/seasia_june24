@@ -1,0 +1,403 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Calendar #10</title>
+      <link href="{% static 'calender/main.css' %}" rel="stylesheet" />
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Poppins',sans-serif;
+        }
+        .container{
+
+          background-color: #fff;
+          padding: 25px 30px;
+          border-radius: 5px;
+          box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+        }
+        .container .title{
+          font-size: 25px;
+          font-weight: 500;
+          position: relative;
+        }
+        .container .title::before{
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 3px;
+          width: 30px;
+          border-radius: 5px;
+          background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        }
+
+
+
+          .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+    
+        .title {
+            margin-right: 10px;
+        }
+
+        .options button {
+          background-color: #5e72e4; /* Set the background color */
+          color: white; /* Set the text color */
+          padding: 5px 10px; /* Set the padding */
+          border: none; /* Remove the border */
+          cursor: pointer; /* Add a cursor pointer on hover */ 
+          margin-left: 50px;
+        }
+      
+        .options button:hover {
+          background-color: #5603ad; /* Change the background color on hover */
+        }
+        /* CSS for the table */
+#response-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+/* CSS for table headers */
+#response-table th {
+  padding: 8px;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+}
+
+/* CSS for table cells */
+#response-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+/* CSS for alternating row colors */
+#response-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+      </style>
+
+ 
+ 
+      
+</head>
+
+   <body>  
+    <div class="container" style=" margin-top: 30px; width: 1000px;margin-left: 265px;" >
+      <div class="title">Attendance Report</div>
+    </div>
+    <div class="container" style=" width: 1000px;margin-left: 265px;" >
+      <div class="options">
+          <label for="department">Select Department:</label>
+          <select id="department" name="department" onchange="fetchEmployees()">
+              <option value="" disabled selected>Select Department:</option>
+              <option value="mooglelabs">Mooglelabs</option>
+              <option value="seasia">Seasia</option>
+              <option value="woosper">Woosper</option>
+              <option value="bugraptor">Bugraptor</option>
+              <option value="cerebrum">Cerebrum</option>
+              <option value="uiux">Uiux</option>
+              <option value="cerebrun_digital">Cerebrun Digital</option>
+          </select>
+      </div>
+  
+      <div class="options" style="margin-left: 50px;">
+          <label for="source">Select Source:</label>
+          <select id="source" name="source" disabled onchange="fetchAttendance()">
+              <option value="">Select Source:</option>
+          </select>
+      </div>
+      <div class="options">
+        <button id="reloadButton" type="button">Clear</button>
+      </div>
+      
+  </div>
+  
+  <div class="container" style=" width: 1000px;margin-left: 265px;" >   
+    <div id="calendar" style="width: 1000px;"></div>       
+  </div>
+    
+                <script src="{% static 'calender/main.js' %}"></script>
+                <script>
+                  var attendance_data = "";
+                  var calendar;
+                  var list = [];
+
+                  document.getElementById("reloadButton").addEventListener("click", function() {
+                    // Reload the page
+                    location.reload();
+                  });
+
+                  function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie !== "") {
+                      var cookies = document.cookie.split(";");
+                      for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === name + "=") {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                        }
+                      }
+                    }
+                    return cookieValue;
+                  }
+
+                  function fetchEmployees() {
+                    var department = document.getElementById("department").value;
+                    var source = document.getElementById("source");
+
+                    var url = "/api/employees?department=" + encodeURIComponent(department);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true);
+                    xhr.onreadystatechange = function () {
+                      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var employees = JSON.parse(xhr.responseText);
+                        console.log(employees, "???????????");
+
+                        source.innerHTML = "";
+                        source.disabled = false;
+                        var employeeOption = document.createElement("option");
+                        employeeOption.value = "";
+                        employeeOption.textContent = "Select Source";
+                        source.appendChild(employeeOption);
+                        if(employees.length>0){
+                          list=[];
+                          for (var i = 0; i < employees.length; i++) {
+                            console.log(employees.length,">>>>>>>>>>>employee.length >>>>>>>>>>>>>>")
+                            var employeeOption = document.createElement("option");
+                            employeeOption.value = employees[i].id;
+                            employeeOption.textContent = employees[i].name;
+                            source.appendChild(employeeOption);
+                            console.log(employees[i].id);
+                            list.push(employees[i].id); // Add employee ID to the list array
+                          }
+                        }else{
+                          list=[];
+                        }
+                        fetchEmployeeDetails(list);
+                      } else {
+                        // Handle errors or show a loading state
+                      }
+                    };
+                    xhr.send();
+                  }
+
+                  function fetchEmployeeDetails(list) {
+                    var url = "/api/employee-details";
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", url, true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken")); // Include CSRF token in the request headers
+
+                    xhr.onreadystatechange = function () {
+                      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var employeeDetails = JSON.parse(xhr.responseText);
+                        console.log(employeeDetails);
+                        calendar.removeAllEvents();
+                
+                        var eventSource = {
+                          events: employeeDetails
+                        };
+                        calendar.addEventSource(eventSource);
+                        list = [];
+                      } else {
+                        // Handle errors or show a loading state
+                      }
+                    };
+
+                    var payload = JSON.stringify({ employeeIds: list });
+                    console.log(payload,">>>>>>>><<<<<<<<<<<?????????????")
+                    xhr.send(payload);
+                  }
+
+
+
+
+                  function fetchAttendance() {
+                    var employeeId = document.getElementById("source").value;
+                    console.log(employeeId,"SENDING THE ID TO BACKEND")
+                    var url = "/api/attendance?employeeId=" + encodeURIComponent(employeeId);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true);
+                    xhr.onreadystatechange = function() {
+                      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var attendanceData = JSON.parse(xhr.responseText);
+                        attendance_data = attendanceData;
+                        console.log(attendance_data, "??????????????????");
+                
+                        // Update the calendar with the new events
+                        calendar.removeAllEvents();
+                
+                        var eventSource = {
+                          events: attendance_data
+                        };
+                
+                        calendar.addEventSource(eventSource);
+                      } else {
+                        // Handle errors or show a loading state
+                      }
+                    };
+                    xhr.send();
+                  }
+
+                  function sendDataToBackend(data) {
+                    var url = "/api/eventdata"; // Replace with your backend endpoint URL
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", url, true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.onreadystatechange = function () {
+                      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        // Handle the response from the backend
+                        console.log(response);
+                        displayResponseData(response);
+                      } else {
+                        // Handle errors or show a loading state
+                      }
+                    };
+                  
+                    var payload = JSON.stringify(data);
+                    console.log(payload,"???????>>>>>>>>???????????")
+                    xhr.send(payload);
+                  }
+
+                  function displayResponseData(response) {
+                    // Get the table element from the DOM
+                    var table = document.getElementById("response-table");
+                  
+                    // Clear the table body
+                    table.innerHTML = "";
+                  
+                    // Create table headers
+                    var headerRow = document.createElement("tr");
+                    Object.keys(response.data[0]).forEach(function (key) {
+                      var th = document.createElement("th");
+                      th.textContent = key;
+                      headerRow.appendChild(th);
+                    });
+                    table.appendChild(headerRow);
+                  
+                    // Create table rows with data
+                    response.data.forEach(function (item) {
+                      var dataRow = document.createElement("tr");
+                      Object.values(item).forEach(function (value) {
+                        var td = document.createElement("td");
+                        td.textContent = value;
+                        dataRow.appendChild(td);
+                      });
+                      table.appendChild(dataRow);
+                    });
+                  }
+                  
+                  
+                
+                  document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+                    var today = new Date();
+                  
+                    calendar = new FullCalendar.Calendar(calendarEl, {
+                      headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay,list'
+                      },
+                      initialDate: today,
+                      navLinks: true,
+                      selectable: true,
+                      selectMirror: true,
+                      select: function(arg) {
+                        console.log('clicked');
+                        var modal = document.getElementById('eventModal');
+                        modal.style.display = 'block';
+                        calendar.unselect();
+                      },
+                      eventClick: function(arg) {
+                        var eventData = {
+                          title: arg.event.title,
+                          start: arg.event.start,
+                        };
+                        var send_department = document.getElementById("department").value;
+                        var send_source = document.getElementById("source").value;
+                      
+                        if (send_department === "") {
+                          var data = {
+                            eventData: eventData,
+                          };
+                          // Only send eventData
+                          sendDataToBackend(data);
+                        } else if (send_source === "") {
+                          // Send eventData and send_source
+                          var data = {
+                            eventData: eventData,
+                            department: send_department
+                          };
+                          sendDataToBackend(data);
+                        } else {
+                          // Send all data
+                          var data = {
+                            eventData: eventData,
+                            department: send_department,
+                            source: send_source
+                          };
+                          sendDataToBackend(data);
+                        }
+                      },
+                      
+
+                      editable: true,
+                      dayMaxEvents: true,
+                      events: {{events|safe}}// Show events by default
+                    });
+                  
+                    calendar.render();
+                  });
+                </script>
+                <div class="container" style=" margin-top: 30px; width: 1000px;margin-left: 265px;" >
+                <table id="response-table">
+                  <!-- Table rows and headers will be dynamically added here -->
+                </table>
+                </div>
+   </body>
+</html>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+{% endblock javascripts %}
+
+
+{% comment %} eventClick: function(arg) {
+  if (confirm('Are you sure you want to delete this event?')) {
+    arg.event.remove();
+  }
+}, {% endcomment %}

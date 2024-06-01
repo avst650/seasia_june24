@@ -1,0 +1,6 @@
+text
+<s>[INST] Who is the Landlord in this lease agreement? [/INST] The Landlord is the High Gates Foundation. </s>
+"<s>[INST] What is the registered office address of the Landlord? [/INST] The registered office address of the Landlord is 41 White Church Lane, London E1 7QR. </s>"
+<s>[INST] Who is the Tenant in this lease agreement? [/INST] The Tenant is Wayne Enterprises UK. </s>
+"<s>[INST] What is the registered office address of the Tenant? [/INST] The registered office address of the Tenant is 41 White Church Lane, London E1 7QR. </s>"
+"<s>[INST] When does the term of this lease begin and end? [/INST] The term of this lease begins immediately and ends on March 31, 2026. </s>"
