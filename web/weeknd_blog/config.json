@@ -1,0 +1,24 @@
+{
+	"params":
+	{
+		"local_server": "True",
+		"local_uri": "mysql+pymysql://root:@localhost/weeknd",
+		"prod_uri": "mysql+pymysql://root:@localhost/weeknd",
+
+		"fb_url": "https://facebook.com/theweeknd",
+		"tw_url": "https://twitter.com/theweeknd",
+		"gh_url": "https://github.com/topics/theweeknd",
+
+		"title": "The Weeknd",
+		"mantra": "XO till we OverDose",
+		"album": "Dawn Fm",
+		"quote": "And if i finally die in peace, just wrap my body in sheets and pour out the gasoline, it wont mean much to me",
+
+		"about_text": "Abel Makkonen Tesfaye (born February 16, 1990), known professionally as the Weeknd, is a Canadian singer-songwriter and record producer. Known for his sonic versatility and dark lyricism, his music explores escapism, romance, and melancholia, and is often inspired by personal experiences.",
+		"number_of_posts": 2,
+		"login_img": "favicon.png",
+		"admin_user": "xo@twod",
+		"admin_password": "xolg", 
+		"upload_location": "C:\\Users\\vashistanush\\OneDrive\\flask\\upload"
+	}
+}

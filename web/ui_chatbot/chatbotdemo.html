@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat UI Page (User)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Urbanist%3A400%2C500%2C600%2C700" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C600%2C700" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Plus+Jakarta+Sans%3A500%2C700" />
+  <link rel="stylesheet" href="./styles/chat-ui-page-user.css" />
+
+  <style>
+
+
+      
+    </style>
+
+
+</head>
+<body>
+  <div class="chat-ui-page">
+    <div class="sidebar">
+      <p class="chatbot">CHATBOT</p>
+      <img class="separator" src="./assets/separator.png" />
+      <div class="pages">
+        <div class="chat-ui">
+          <img class="autoawesome" src="./assets/autoawesomefill1wght400grad0opsz48-1-2W8.png" />
+          <p class="pagetitle">Chat Bot History</p>
+        </div>
+        <!-- <div class="user-pages">
+         
+
+        </div>
+      
+        <div class="admin-page">
+
+      
+        </div>
+     
+        <div class="admin-pages">
+
+         
+        </div> -->
+      </div>
+      <div class="auto-group-4"></div>
+      <div class="bottom-elements">
+        <img class="avatar" src="./assets/avatar-vt4.png" />
+        <p class="adela-parkson">Adela Parkson</p>
+        <img class="logout" src="./assets/logout-GJ8.png" />
+      </div>
+    </div>
+    <div class="auto-group">
+      <div class="menu">
+        <p class="chat-bot">Chat Bot</p>
+
+<div class="misc">
+  <div class="button-1">
+    <img class="page-1" src="./assets/page-1.png" />
+    <label class="upload-pdf">
+      Upload PDF
+      <input type="file" style="display: none;" accept=".pdf" />
+    </label>
+  </div>
+  <div class="button-2">
+    <img class="vector" src="./assets/vector-pqz.png" />
+    <p class="upload-link">Upload link</p>
+  </div>
+  <!-- <div class="button-2">
+    <img class="vector" src="./assets/vector-pqz.png" />
+    <input type="text" class="upload-link" placeholder="Paste URL..." />
+  </div> -->
+</div>
+
+        
+
+      </div>
+      <div class="layout">
+        <div class="auto-group-1">
+          <div class="auto-group-2">
+            <img class="bg-image" src="./assets/bg-image-Stc.png" />
+            <div class="group-1">
+              <div class="question-card" style="display: none;"></div>
+              <p class="artificial-intelligence"></p>
+            </div>
+            <div class="group-3">
+                <div class="question-card-2" style="display: none;">
+                <p class="artificial-intelligence-ai"></p>
+              </div>
+            </div>
+          </div>
+          <div class="auto-group-3">
+            <input class="input-message" type="text" placeholder="Enter your question">
+            <button class="button-3" onclick="submitQuestion()">Submit</button>
+          </div>
+          <!-- <p class="chatbot-rights">© 2024 Chatbot . All Rights Reserved.</p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function submitQuestion() {
+      // Get the value of the input message
+    
+      var inputMessage = document.querySelector('.input-message').value;
+
+      // Display the input message under the "artificial-intelligence" class
+      var aiElement = document.querySelector('.artificial-intelligence');
+      aiElement.innerHTML = inputMessage;
+
+      // Display the static answer under the "artifical-intelligence-ai" class
+      var responseElement = document.querySelector('.artificial-intelligence-ai');
+      responseElement.innerHTML = "The lease date is 15-08-2024.";
+
+
+      // Show the question and answer elements
+      document.querySelector('.question-card').style.display = "block";
+      document.querySelector('.question-card-2').style.display = "block";
+
+
+      // Clear the input message after submission (optional)
+      document.querySelector('.input-message').value = "";
+    }
+  </script>
+  
+</body>
+</html>
+
+
