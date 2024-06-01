@@ -1,0 +1,6 @@
+To login in server : sudo ssh -i azurenew.pem azureuser@52.191.197.115
+edit code : sudo nano script.py
+run script : python3 script.py
+
+ps aux | grep -i python
+
