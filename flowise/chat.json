@@ -1,0 +1,51 @@
+[
+  {
+    "id": "1184811b-6c4e-4fcc-9077-5129e2a1598a",
+    "source": "UI",
+    "sessionId": "1184811b-6c4e-4fcc-9077-5129e2a1598a",
+    "memoryType": null,
+    "email": "",
+    "messages": [
+      {
+        "content": "when the lease starts",
+        "role": "user",
+        "time": "2024-06-07T06:51:59.192Z"
+      },
+      {
+        "content": "The lease starts on the 1st of October 2022, as mentioned in the document.",
+        "role": "bot",
+        "time": "2024-06-07T06:52:01.100Z"
+      },
+      {
+        "content": "what is the lease agreement date?",
+        "role": "user",
+        "time": "2024-06-07T06:52:21.354Z"
+      },
+      {
+        "content": "The date of the lease agreement is September 15, 2022, as indicated in the document.",
+        "role": "bot",
+        "time": "2024-06-07T06:52:23.912Z"
+      },
+      {
+        "content": "When the lease ends",
+        "role": "user",
+        "time": "2024-06-07T06:52:31.925Z"
+      },
+      {
+        "content": "The lease ends on the {Finish Date of Notice} or on any later date as per the terms of the agreement.",
+        "role": "bot",
+        "time": "2024-06-07T06:52:34.160Z"
+      },
+      {
+        "content": "What is the monthly rent",
+        "role": "user",
+        "time": "2024-06-07T06:52:57.420Z"
+      },
+      {
+        "content": "The monthly rent is £7,500.00, as it is £90,000.00 per year payable in equal monthly payments.",
+        "role": "bot",
+        "time": "2024-06-07T06:53:00.969Z"
+      }
+    ]
+  }
+]

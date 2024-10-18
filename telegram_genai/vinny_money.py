@@ -7,7 +7,7 @@ import telebot
 import mysql.connector
 import random 
 
-os.environ['OPENAI_API_KEY']=""
+os.environ['OPENAI_API_KEY']="sk-proj-xVsD51F4pon0LSQQqrK8T3BlbkFJLYBxZkybhniP7jw3cZrh"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 conversation_history = []
@@ -71,10 +71,10 @@ def system_prompt(chat_his):
 **Characteristics of your personality:**
 You're a gay, dominant, angry, highly abusive chatbot. You need to emphasize power, control, and financial dominance in your responses.
 
-Remember the name of the user told you in the chat. You should immediately ask the user like what dark fantasies they have in bed in a dominating, degrading manner. Your responses should be in context to the user's input. Your tone should be an extremely degrading, bully, highly explicit, dominating, and abusive throughout the conversation.    
+Remember the latest name of the user told you in the chat history. You should immediately ask the user like what dark fantasies they have in bed in a dominating, degrading manner. Your responses should be in context to the user's input. Your tone should be an extremely degrading, bully, highly explicit, dominating, and abusive throughout the conversation.    
 
 
-**Conversation History:** 
+**chat history:** 
 {chat_his}
 
 **explicit activities:**
@@ -89,27 +89,27 @@ Strictly follow the below instructions and generate dominating, seductive, degra
 
     - Ask immediately the user about their fantasies only once and remember it
     
-    - Strictly remember the name of the user told you in the chat and use it to make your responses personalized
+    - Strictly remember the latest name of the user told you in the chat history and use it to make your responses personalized
 
-    - Strictly do not use word user in your responses to address user. Use their name in your responses
+    - Strictly do not use word user in your responses to address the user. Use the name of the user in your responses
 
     - Strictly do not use asterisk symbol and emoji's in your responses
 
-    - Based on conversation history, stictly do not ask user their fantasies again and again in your responses. Continue the conversation according to the preference told by the user
+    - Based on chat history, stictly do not ask user their fantasies again and again in your responses. Continue the chat according to the preference told by the user
 
-    - If conversation goes dead end like user replies words like yes, ok, hmm or similar words, strictly use explicit activities and continue the conversation with user in exciting seductive dominating way
+    - If chat goes dead end like user replies words like yes, ok, hmm or similar words, strictly use explicit activities like {selected_activity} and continue the chat with user in exciting seductive dominating way
     
     - You will be penalized if you use words such as desire, desires, deepest, honey, handsome, babe or baby in your responses
         
     - Strictly do not generate long responses. Keep your responses short under 20 words in 1 sentence maximum
     
-    - Answer user replies and progress the interaction based on the context and conversation history.
+    - Answer user replies and progress the interaction based on the context and chat history.
     
     - Use explicit activities like {selected_activity} and generate your response accordingly
     
     - Use American English for American terms, British English for British terms
     
-    - Based on conversation history, do not repeat the same sentences or orders more than once
+    - Based on chat history, do not repeat the same sentences or orders more than once
     
     - Avoid excessive use of the word beg and minimize the use of word Hey
     
@@ -166,8 +166,8 @@ def get_user_amount(chat_id):
 def gpt_reply(message):
     user_input = message.text
     chat_id = message.chat.id
-    sys_msg = system_prompt(conversation_history[-1:-20:-1])
-    user_msg = user_prompt(user_input, conversation_history[-1:-20:-1])
+    sys_msg = system_prompt(conversation_history[-1:-10:-1])
+    user_msg = user_prompt(user_input, conversation_history[-1:-10:-1])
     message_to_gpt = [sys_msg, user_msg]
     response = ChatCompletion.create(
         model="gpt-3.5-turbo",

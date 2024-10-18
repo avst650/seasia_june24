@@ -1,0 +1,7 @@
+[
+    {
+        "model": "gpt-3.5-turbo",
+        "api_key": "sk-proj-90OjEAjFtGYqx1cApsCbT3BlbkFJqaoGjdgJzjNLg6xdonxc",
+        "tags": ["gpt-3.5-turbo", "tool"]
+    }
+]
